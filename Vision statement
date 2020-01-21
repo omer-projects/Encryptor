@@ -1,0 +1,29 @@
+# Vision Statement – Encryptor - Encrypt image within an image
+
+Project goals:
+
+•	Mobile application that encrypts image with sensitive information inside another image, for people who need to send or save image with sensitive information.
+•	The application will be ready for use until the 9.9.2020.
+
+
+Project scope:
+
+•	Mobile application which gets the required images and parameters.
+•	Black and white encryption of one single image inside another image.
+•	Provides a JPEG result image.
+
+
+High-level features: 
+
+•	Easy and convenient GUI to select an image to encrypt, a "cover image" and encryption parameters.
+•	Upload an image from gallery
+•	Take a photo directly from the camera to the application.
+Note: will be implemented in the next version.
+•	Export the encrypted image as a JPEG image.
+
+
+Major milestones and deliverables:
+
+•	Mobile application which provides interface for selecting images and parameters.
+•	Runs the encryption algorithm for the required images and parameters and shows the result image.
+•	Export the encrypted image to a local directory as a JPEG file.
