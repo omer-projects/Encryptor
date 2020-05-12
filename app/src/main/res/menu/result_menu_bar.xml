@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/share_result_item"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="show_selected_contacts"
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/save_result_item"
+        android:icon="@drawable/round_save_alt_24"
+        android:title="show_selected_contacts"
+        app:showAsAction="always"></item>
+
+</menu>
