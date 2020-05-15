@@ -156,7 +156,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:background="@drawable/custom_button"
-        android:text="merge images" />
+        android:text="Decrypt image" />
 
 
 </LinearLayout>

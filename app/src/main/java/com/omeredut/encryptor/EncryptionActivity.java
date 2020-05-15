@@ -62,7 +62,6 @@ public class EncryptionActivity extends AppCompatActivity {
     private EditImageFragment editImageFragment;
 
     private StorageController storageController;
-    private Coder coder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +77,6 @@ public class EncryptionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         storageController = new StorageController(this);
-        coder = new Coder();
 
         //cover image settings
         coverImageView = findViewById(R.id.cover_image_view);
@@ -253,53 +251,6 @@ public class EncryptionActivity extends AppCompatActivity {
             encryptionImageView.setVisibility(View.VISIBLE);
             encryptionImageView.setImageBitmap(/*getRoundedCornerBitmap(squareImage(*/encryptionBitmap/*))*/);
             hasEncryptionImage = true;
-        }
-    }
-
-    public String saveImage(Bitmap bitmapImage){
-        OutputStream outputStream = null;
-        String fileName = String.valueOf(System.currentTimeMillis()) + ".jpeg";
-
-        File filepath = Environment.getExternalStorageDirectory();
-        File dir = new File(filepath+"/test/");
-        dir.mkdir();
-        File file = new File(dir, fileName);
-        try {
-            outputStream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-
-        if (outputStream != null){
-            try {
-                outputStream.flush();
-            } catch (IOException e) {
-                fileName = null;
-                e.printStackTrace();
-            }
-            try {
-                outputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                fileName = null;
-            }
-        }
-        return fileName;
-    }
-
-
-
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 111) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //loadUrl();
-            }
         }
     }
 

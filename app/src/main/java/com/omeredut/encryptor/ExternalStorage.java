@@ -1,20 +1,37 @@
 package com.omeredut.encryptor;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 
 public class ExternalStorage {
 
 
-    private static final String DIRECTORY_APP = "/test/";
-    private static final String END_FILE = ".jpeg";
+    private static final String DIRECTORY_APP = "/Encryptor/";
+    private static final String END_FILE = ".png";
     private static final int COMPRESS_QUALITY = 100;
+    private String filePath;
+
+
+    public ExternalStorage(String filePath){
+        this.filePath = filePath;
+    }
+    public ExternalStorage(){
+        this.filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        new ExternalStorage(filePath);
+    }
 
 
 
@@ -23,8 +40,7 @@ public class ExternalStorage {
         OutputStream outputStream = null;
         String fileName = String.valueOf(System.currentTimeMillis()) + END_FILE;
 
-        File filepath = Environment.getExternalStorageDirectory();
-        File dir = new File(filepath.getAbsolutePath()+DIRECTORY_APP);
+        File dir = new File(filePath+DIRECTORY_APP);
         dir.mkdir();
         File file = new File(dir, fileName);
 
@@ -33,7 +49,7 @@ public class ExternalStorage {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        bitmapImage.compress(Bitmap.CompressFormat.JPEG, COMPRESS_QUALITY, outputStream);
+        bitmapImage.compress(Bitmap.CompressFormat.PNG, COMPRESS_QUALITY, outputStream);
 
         if (outputStream != null){
             try {
@@ -50,23 +66,6 @@ public class ExternalStorage {
             }
         }
         return fileName;
-    }
-
-
-    public File getPublicAlbumStorageDir(String albumName) {
-        // Get the directory for the user's public pictures directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (file.mkdirs()) {
-            //if directory not exist
-        //    Toast.makeText(getApplicationContext(),
-        //            file.getAbsolutePath() + " created",
-        //            Toast.LENGTH_LONG).show();
-        }else{
-        //    Toast.makeText(getApplicationContext(),
-        //            "Directory not created", Toast.LENGTH_LONG).show();
-        }
-        return file;
     }
 
 }

@@ -14,25 +14,19 @@ public class Steganography {
     }
 
 
-    public boolean isGrayScale(){return false;}
-    public boolean isSteganography(){return false;}
+    //public boolean isGrayScale(){return false;}
+    //public boolean isSteganography(){return false;}
     public Bitmap decrypt(Bitmap decryptionBitmap){
-        return encryption.newDecrypt(decryptionBitmap);
+        return decryption.decrypt(decryptionBitmap);
     }
 
 
 
     public Bitmap encrypt(Bitmap coverImageBitmap, Bitmap encryptionBitmap){
-        /*Bitmap redChannelEncrypt = encryption.newEncryption(getRedChannel(coverImageBitmap), getRedChannel(encryptionBitmap));
-        Bitmap greenChannelEncrypt = encryption.newEncryption(getGreenChannel(coverImageBitmap), getGreenChannel(encryptionBitmap));
-        Bitmap blueChannelEncrypt = encryption.newEncryption(getBlueChannel(coverImageBitmap), getBlueChannel(encryptionBitmap));
-        Bitmap resultBitmap = getColorImage(redChannelEncrypt, greenChannelEncrypt, blueChannelEncrypt);
-        return resultBitmap;*/
-        //return encryption.encryptImage(rgb2GrayScale(coverImageBitmap), rgb2GrayScale(encryptionBitmap));
-        return encryption.newEncryption(coverImageBitmap, encryptionBitmap);
+        return encryption.encrypt(coverImageBitmap, encryptionBitmap);
     }
 
-    public Bitmap getBlueChannel(Bitmap imageBitmap){
+    /*public Bitmap getBlueChannel(Bitmap imageBitmap){
         int width = imageBitmap.getWidth();
         int height =imageBitmap.getHeight();
         Bitmap blueChannel = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -83,6 +77,6 @@ public class Steganography {
             }
         }
         return colorImage;
-    }
+    }*/
 
 }

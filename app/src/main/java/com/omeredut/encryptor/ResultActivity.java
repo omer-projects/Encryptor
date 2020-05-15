@@ -1,6 +1,8 @@
 package com.omeredut.encryptor;
 
 import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,12 +24,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
+import java.util.Locale;
 
 
 public class ResultActivity extends AppCompatActivity {
 
-    private static final String EXTERNAL_PATH = Environment.getExternalStorageState();
-    private static final int COMPRESS_QUALITY = 100;
+    private static final File EXTERNAL_PATH = Environment.getExternalStorageDirectory();
 
     //Model View
     private StorageController storageController;
@@ -35,7 +38,7 @@ public class ResultActivity extends AppCompatActivity {
     private int source;
     private ImageView resultImageView;
     private Bitmap resultBitmapImage;
-    private String path;
+    //private String path;
     private String fileName;
 
 
@@ -63,54 +66,12 @@ public class ResultActivity extends AppCompatActivity {
         resultImageView.setImageBitmap(resultBitmapImage);
         setTitleBySource(source);
 
-
-
-
-
-
-
-
-
-
-
-
-
         /*if (savedInstanceState != null){
             //TODO: pull the saved state.
             resultBitmapImage = savedInstanceState.getParcelable(getString(R.string.result_image));
             resultImageView.setImageBitmap(resultBitmapImage);
         }*/
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private void checkWritePermissionAndSaveImage(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -133,48 +94,6 @@ public class ResultActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-
-
-
-
-
-
-    /*private void writeToExternalStorage(Bitmap imageBitmap){
-
-        //BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-        //Bitmap bitmap = bitmapDrawable.getBitmap();
-
-
-        String DIRECTORY_FILES = "/MyAppFiles";
-        String state = Environment.getExternalStorageState();
-        String savedImageURL = MediaStore.Images.Media.insertImage(getContentResolver(), imageBitmap, "Bird", "Image of bird");
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            File root = Environment.getExternalStorageDirectory();
-            File dir = new File(savedImageURL);
-            if (!dir.exists()){
-                dir.mkdir();
-            }
-            File file = new File(dir, "test.jpeg");
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                //fileOutputStream.write("Hello World!!!".getBytes());
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, COMPRESS_QUALITY, fileOutputStream);
-                fileOutputStream.close();
-                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Error1", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                Toast.makeText(getApplicationContext(), "Error2", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "Not available", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -218,10 +137,12 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void writeImageToGallery(Bitmap imageBitmap) {
-        if (true) {
-            String savedImageURL = MediaStore.Images.Media.insertImage(getContentResolver(), resultBitmapImage, "Bird", "Image of bird");
+        String fileName = storageController.saveImageToExternalStorage(imageBitmap);
+        if (fileName != null) {
+            showImageInGallery(fileName);
+            Toast.makeText(ResultActivity.this, "The image saved successfully", Toast.LENGTH_LONG).show();
         } else {
-            ApplicationAlerts.simpleAlert(this, "Success", "Image saved successfully");
+            Toast.makeText(ResultActivity.this, "The image saved failed", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -259,4 +180,23 @@ public class ResultActivity extends AppCompatActivity {
             resultImageView.setImageBitmap(resultBitmapImage);
         }
     }*/
+
+
+    /**
+     * This function show the given image file in the gallery
+     * @param fileName the given image file name
+     */
+    private void showImageInGallery(String fileName){
+        String pathImageFile = EXTERNAL_PATH+"/"+getResources().getString(R.string.app_name)+"/"+fileName;
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, getResources().getString(R.string.app_name));
+        //values.put(MediaStore.Images.Media.DESCRIPTION, "some description");
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis ());
+        values.put(MediaStore.Images.ImageColumns.BUCKET_ID, (pathImageFile.toLowerCase(Locale.US).hashCode()));
+        values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, fileName.toLowerCase(Locale.US));
+        values.put("_data", pathImageFile);
+
+        ContentResolver cr = getContentResolver();
+        cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
 }

@@ -35,7 +35,6 @@ public class DecryptionActivity extends AppCompatActivity {
     private Steganography steganography;
     //Model View
     private StorageController storageController;
-    private Coder coder;
 
     private Toolbar decryptionToolbar;
 
@@ -81,7 +80,6 @@ public class DecryptionActivity extends AppCompatActivity {
 
 
         storageController = new StorageController(this);
-        coder = new Coder();
         steganography = new Steganography();
 
         decryptionImageView = findViewById(R.id.decryption_image_view);

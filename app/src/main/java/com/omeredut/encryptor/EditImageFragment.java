@@ -38,18 +38,16 @@ public class EditImageFragment extends BottomSheetDialogFragment {
     public static final String SELECT_IMAGE = "SELECT_IMAGE";
     public static final String EDIT_IMAGE = "EDIT_IMAGE";
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //private static final String ARG_PARAM1 = "param1";
+    //private static final String ARG_PARAM2 = "param2";
+
     private static final int BASE_BLANK_IMAGE = R.drawable.baseline_add_photo_alternate_24;
-    //private static final int BASE_CAMERA_IMAGE = R.drawable.icon_camera;
-    //private static final int BASE_GALLERY_IMAGE = R.drawable.icon_gallery;
-    //private static final int BASE_TRASH_IMAGE = R.drawable.icon_trash;
     private static final String SELECT_TITLE = "Select Image";
     private static final String EDIT_TITLE = "Edit Image";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //private String mParam1;
+    //private String mParam2;
 
 
     //private String title;
@@ -95,10 +93,10 @@ public class EditImageFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
         bitmapImage = null;
         //mListener = null;
     }

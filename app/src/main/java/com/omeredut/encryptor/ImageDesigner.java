@@ -11,9 +11,15 @@ import android.graphics.RectF;
 public class ImageDesigner {
 
 
-    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
-        int height = bitmap.getHeight();
-        int width = bitmap.getWidth();
+    /**
+     * This function rounded corners of given bitmap image and by given n, if not given n it will be 25 and the image that you will get will be in a circle
+     * @param bitmapImage bitmap image for round corners
+     * @param n the number of percent for round
+     * @return Bitmap of the rounded image
+     */
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmapImage, int n) {
+        int height = bitmapImage.getHeight();
+        int width = bitmapImage.getWidth();
         Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
 
@@ -21,7 +27,7 @@ public class ImageDesigner {
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, width, height);
         final RectF rectF = new RectF(rect);
-        final float roundPx = (width + height) / 16;
+        final float roundPx = (width + height) / n;
 
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
@@ -29,14 +35,22 @@ public class ImageDesigner {
         canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
+        canvas.drawBitmap(bitmapImage, rect, rect, paint);
 
         return output;
     }
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmapImage) {
+        return getRoundedCornerBitmap(bitmapImage, 25);
+    }
 
 
-    public static Bitmap squareImage(Bitmap image) {
-        Bitmap squreImage = image;
+    /**
+     * This function crop given image bitmap to square in the middle of the image
+     * @param bitmapImage the image bitmap for crop
+     * @return bitmap of the square image
+     */
+    public static Bitmap squareImage(Bitmap bitmapImage) {
+        Bitmap squreImage = bitmapImage;
         int height = squreImage.getHeight();
         int width = squreImage.getWidth();
         if (width != height) {
@@ -50,7 +64,7 @@ public class ImageDesigner {
                 size = height;
                 startX = (width - height) / 2;
             }
-            squreImage = Bitmap.createBitmap(image, startX, startY, size, size);
+            squreImage = Bitmap.createBitmap(bitmapImage, startX, startY, size, size);
         }
         return squreImage;
     }

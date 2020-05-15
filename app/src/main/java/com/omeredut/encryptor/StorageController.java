@@ -7,7 +7,6 @@ import java.io.File;
 
 public class StorageController {
 
-    private Context context;
     private File cachePath;
     private String imagesDirectory;
 
@@ -15,7 +14,6 @@ public class StorageController {
     private ExternalStorage externalStorage;
 
     public StorageController(Context context){
-        this.context = context;
         imagesDirectory = context.getString(R.string.images_directory);
         File cacheDir = context.getCacheDir();
         cachePath = new File(cacheDir,imagesDirectory);
@@ -27,24 +25,20 @@ public class StorageController {
 
 
     public String saveImageToInternalStorage(Bitmap bitmapImage, String fileName){
-        internalStorage = new InternalStorage(cachePath);
         return internalStorage.saveImageToInternalStorage(bitmapImage, fileName);
     }
     public String saveImageToInternalStorage(Bitmap bitmapImage){
-        internalStorage = new InternalStorage(cachePath);
-        return internalStorage.saveImageToInternalStorage(bitmapImage, "");
+        return internalStorage.saveImageToInternalStorage(bitmapImage);
     }
 
 
     public Bitmap loadImageFromInternalStorage(String fileName){
-        internalStorage = new InternalStorage(cachePath);
-        Bitmap loadImage = internalStorage.loadImageFromInternalStorage(fileName);
-        return loadImage;
+        return internalStorage.loadImageFromInternalStorage(fileName);
     }
 
 
-    public void saveImageToExternalStorage(){
-        externalStorage = new ExternalStorage();
+    public String saveImageToExternalStorage(Bitmap imageBitmap){
+        return externalStorage.saveImageToExternalStorage(imageBitmap);
     }
 
 }

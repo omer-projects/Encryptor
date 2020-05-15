@@ -160,7 +160,7 @@
         android:id="@+id/decryption_button"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
-        android:text="merge images"/>
+        android:text="Decrypt image"/>
 
 
 </LinearLayout>

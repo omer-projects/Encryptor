@@ -14,12 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -53,30 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
-
-
-
-    private void readFromInternalStorage(String nameFile) {
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = openFileInput(nameFile);
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -86,30 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-/*
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (coverImageView != null) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) coverImageView.getDrawable();
-            if (bitmapDrawable != null) {
-                Bitmap bitmap = bitmapDrawable.getBitmap();
-                outState.putParcelable("imageBitmap", bitmap);
-            }
-        }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-*/
-
-
-    private void initNavigationBarMenu() {
+    /*private void initNavigationBarMenu() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    }
+    }*/
 
 
 
